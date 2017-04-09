@@ -62,7 +62,7 @@ public class ChatMessageAdapter extends RecyclerView.Adapter<ChatMessageAdapter.
                 View itemView = LayoutInflater.from(parent.getContext())
                         .inflate(R.layout.message_row_my, parent, false);
                 TextView from = (TextView) itemView.findViewById(R.id.from);
-                from.setVisibility(View.GONE);
+                from.setVisibility(View.INVISIBLE);
                 return new MyViewHolder(itemView);
 
             }
@@ -71,7 +71,7 @@ public class ChatMessageAdapter extends RecyclerView.Adapter<ChatMessageAdapter.
                 View itemView = LayoutInflater.from(parent.getContext())
                         .inflate(R.layout.message_row_my, parent, false);
                 TextView from = (TextView) itemView.findViewById(R.id.from);
-                from.setVisibility(View.GONE);
+                from.setVisibility(View.INVISIBLE);
                 ImageView sent = (ImageView)itemView.findViewById(R.id.sent);
                 sent.setVisibility(View.VISIBLE);
                 return new MyViewHolder(itemView);

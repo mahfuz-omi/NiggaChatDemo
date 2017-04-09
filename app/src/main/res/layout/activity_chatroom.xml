@@ -5,50 +5,47 @@
     android:orientation="vertical">
 
     <TextView
+        android:id="@+id/full_name"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
         android:background="@color/fbutton_color_emerald"
         android:gravity="center"
-        android:id="@+id/full_name"
-        android:text="full_name"
-        android:layout_width="match_parent"
-        android:layout_height="30dp" />
+        android:text="full_name" />
 
     <android.support.v7.widget.RecyclerView
 
+        android:id="@+id/parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_above="@+id/linearLayout1"
         android:layout_below="@id/full_name"
-        android:layout_width="match_parent"
-        android:layout_height="500dp"
-        android:scrollbars="vertical"
-        android:id="@+id/parent">
-    </android.support.v7.widget.RecyclerView>
+        android:scrollbars="vertical"></android.support.v7.widget.RecyclerView>
 
 
     <LinearLayout
         android:id="@+id/linearLayout1"
-        android:layout_weight="0.8"
-        android:orientation="horizontal"
-        android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_weight="0.8"
+        android:orientation="horizontal">
 
         <EditText
-            android:layout_marginTop="20dp"
-            android:layout_weight="0.9"
             android:id="@+id/myMessage"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_weight="0.8" />
 
         <info.hoang8f.widget.FButton
-            android:layout_weight="0.1"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.2"
             android:onClick="sendMessage"
             android:text="send" />
 
 
     </LinearLayout>
-
-
 
 
 </RelativeLayout>
