@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "870414182188",
+    "firebase_url": "https://nigga-chat.firebaseio.com",
+    "project_id": "nigga-chat",
+    "storage_bucket": "nigga-chat.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:870414182188:android:cd0aa37fb78a7cf4",
+        "android_client_info": {
+          "package_name": "com.example.omi.niggachatdemo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "870414182188-35e8d7n8i2rm77dnts5makn8asmjro3e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.omi.niggachatdemo",
+            "certificate_hash": "4975EF3FA5B84EF68F90C2557DC65FD79947B438"
+          }
+        },
+        {
+          "client_id": "870414182188-bghqbuoqtlr90sko1ha1j3grlcfssa4r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBYLReBOHE1CxM0Wi1EEOLLXcaypPSSWrc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "870414182188-bghqbuoqtlr90sko1ha1j3grlcfssa4r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

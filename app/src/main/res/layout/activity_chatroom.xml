@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:background="@color/fbutton_color_emerald"
+        android:gravity="center"
+        android:id="@+id/full_name"
+        android:text="full_name"
+        android:layout_width="match_parent"
+        android:layout_height="30dp" />
+
+    <android.support.v7.widget.RecyclerView
+
+        android:layout_above="@+id/linearLayout1"
+        android:layout_below="@id/full_name"
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        android:scrollbars="vertical"
+        android:id="@+id/parent">
+    </android.support.v7.widget.RecyclerView>
+
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_weight="0.8"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:layout_marginTop="20dp"
+            android:layout_weight="0.9"
+            android:id="@+id/myMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <info.hoang8f.widget.FButton
+            android:layout_weight="0.1"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:onClick="sendMessage"
+            android:text="send" />
+
+
+    </LinearLayout>
+
+
+
+
+</RelativeLayout>
