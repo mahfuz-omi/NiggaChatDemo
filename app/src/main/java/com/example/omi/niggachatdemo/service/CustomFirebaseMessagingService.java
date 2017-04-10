@@ -1,4 +1,4 @@
-package com.example.omi.niggachatdemo;
+package com.example.omi.niggachatdemo.service;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -6,12 +6,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
-import android.os.Build;
-import android.os.Handler;
-import android.os.Looper;
 import android.support.v4.app.NotificationCompat;
-import android.widget.Toast;
 
+import com.example.omi.niggachatdemo.application.NiggaChatApplication;
+import com.example.omi.niggachatdemo.R;
+import com.example.omi.niggachatdemo.activity.ChatRoomActivity;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 

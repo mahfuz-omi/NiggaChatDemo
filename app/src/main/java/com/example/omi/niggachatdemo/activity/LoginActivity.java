@@ -1,9 +1,8 @@
-package com.example.omi.niggachatdemo;
+package com.example.omi.niggachatdemo.activity;
 
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,6 +19,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.omi.niggachatdemo.application.NiggaChatApplication;
+import com.example.omi.niggachatdemo.R;
+import com.example.omi.niggachatdemo.webservice.WebService;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -31,7 +33,6 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.net.URI;
 import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
@@ -50,6 +51,14 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+
+        if(((NiggaChatApplication)getApplication()).isUserLoggedIn())
+        {
+            Intent intent = new Intent(this,DashboardActivity.class);
+            startActivity(intent);
+            return;
+        }
 
 
         this.appName = (TextView)findViewById(R.id.appName);
@@ -130,9 +139,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                                     String full_name = response.getString("full_name");
                                     String email_address = response.getString("email_address");
                                     ((NiggaChatApplication)getApplication()).loggedInUser(full_name,email_address);
-                                    Intent intent = new Intent(LoginActivity.this,ChatRoomActivity.class);
+                                    Intent intent = new Intent(LoginActivity.this,DashboardActivity.class);
                                     startActivity(intent);
-                                    finish();
                                 }
                                 else
                                 {

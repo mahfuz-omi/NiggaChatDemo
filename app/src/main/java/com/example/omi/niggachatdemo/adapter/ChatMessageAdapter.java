@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.omi.niggachatdemo.NiggaChatApplication;
+import com.example.omi.niggachatdemo.application.NiggaChatApplication;
 import com.example.omi.niggachatdemo.R;
 import com.example.omi.niggachatdemo.model.ChatMessage;
 

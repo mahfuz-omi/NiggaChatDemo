@@ -1,4 +1,4 @@
-package com.example.omi.niggachatdemo;
+package com.example.omi.niggachatdemo.application;
 
 import android.app.Application;
 import android.content.Context;
@@ -14,7 +14,7 @@ public class NiggaChatApplication extends Application {
 
 
     //////////////////////////////
-    private boolean isUserLoggedIn = false;
+    private boolean isUserLoggedIn;
     private String access_token = "";
     private String full_name = "";
     private String email_address = "";

@@ -1,4 +1,4 @@
-package com.example.omi.niggachatdemo;
+package com.example.omi.niggachatdemo.activity;
 
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
@@ -33,6 +33,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.omi.niggachatdemo.application.NiggaChatApplication;
+import com.example.omi.niggachatdemo.R;
+import com.example.omi.niggachatdemo.webservice.WebService;
 import com.example.omi.niggachatdemo.adapter.ChatMessageAdapter;
 import com.example.omi.niggachatdemo.model.ChatMessage;
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -85,9 +88,11 @@ public class ChatRoomActivity  extends AppCompatActivity {
                                 Toast.makeText(ChatRoomActivity.this, "You are logged out now!!", Toast.LENGTH_LONG).show();
                             }
 
+
+                            finish();
                             Intent intent = new Intent(ChatRoomActivity.this,LoginActivity.class);
                             startActivity(intent);
-                            finish();
+
                             return;
 
                         } catch (Exception e) {
@@ -171,29 +176,16 @@ public class ChatRoomActivity  extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chatroom);
-        //setContentView(R.layout.test);
 
-//        ActionBar actionBar = getSupportActionBar();
-//        actionBar.setLogo(R.drawable.icon);
-//        actionBar.setDisplayUseLogoEnabled(true);
-//        actionBar.setDisplayShowHomeEnabled(true);
-
-        //getSupportActionBar().setDisplayShowHomeEnabled(true);
-        //getSupportActionBar().setDisplayShowHomeEnabled(true);
-        //getSupportActionBar().setIcon(R.drawable.i);
+        // enable back button
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         this.full_name = (TextView) findViewById(R.id.full_name);
         full_name.setText(((NiggaChatApplication)getApplication()).getFull_name());
 
         registerReceiver(myBroadcastReceiver,intentFilter);
 
-        if(!((NiggaChatApplication)getApplication()).isUserLoggedIn())
-        {
-            Intent intent = new Intent(this,LoginActivity.class);
-            startActivity(intent);
-            finish();
-            return;
-        }
+
 
         this.chatMessages = new ArrayList<>();
         this.chatMessageAdapter = new ChatMessageAdapter(chatMessages,this);

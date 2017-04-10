@@ -1,8 +1,5 @@
-package com.example.omi.niggachatdemo;
+package com.example.omi.niggachatdemo.service;
 
-import android.content.Intent;
-import android.os.Handler;
-import android.os.Looper;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -12,6 +9,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.omi.niggachatdemo.application.NiggaChatApplication;
+import com.example.omi.niggachatdemo.webservice.WebService;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
 
