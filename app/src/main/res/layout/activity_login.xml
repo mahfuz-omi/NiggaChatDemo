@@ -26,7 +26,7 @@
         android:id="@+id/appName"
         android:layout_width="wrap_content"
         android:layout_height="62dp"
-        android:text="CommChat"
+        android:text="Secret Chat"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textSize="25dp" />
 

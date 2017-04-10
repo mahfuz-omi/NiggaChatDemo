@@ -170,8 +170,7 @@ public class CreateChatGroupActivity extends AppCompatActivity implements View.O
 
     }
 
-    public void logout()
-    {
+    public void logout() {
         pDialog = new ProgressDialog(CreateChatGroupActivity.this);
         pDialog.setMessage("Please wait...");
         pDialog.setCancelable(false);
@@ -185,48 +184,42 @@ public class CreateChatGroupActivity extends AppCompatActivity implements View.O
                             pDialog.dismiss();
                         // the response is already constructed as a JSONObject!
                         try {
-                            System.out.println("response: "+response.toString());
+                            System.out.println("response: " + response.toString());
 
 
-                            if(response.has("success"))
-                            {
-                                ((NiggaChatApplication)getApplication()).logoutUser();
+                            if (response.has("success")) {
+                                ((NiggaChatApplication) getApplication()).logoutUser();
                                 Toast.makeText(CreateChatGroupActivity.this, "You are logged out now!!", Toast.LENGTH_LONG).show();
+                                finish();
+                                Intent intent = new Intent(CreateChatGroupActivity.this, LoginActivity.class);
+                                startActivity(intent);
+                                return;
                             }
 
-
-                            finish();
-                            Intent intent = new Intent(CreateChatGroupActivity.this,LoginActivity.class);
-                            startActivity(intent);
-
-                            return;
 
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
-                }, new Response.ErrorListener()
-                {
+                }, new Response.ErrorListener() {
 
                     @Override
-                    public void onErrorResponse(VolleyError error)
-                    {
+                    public void onErrorResponse(VolleyError error) {
                         if (pDialog.isShowing())
                             pDialog.dismiss();
                         Toast.makeText(CreateChatGroupActivity.this, "Network error...please try again later", Toast.LENGTH_SHORT).show();
                         error.printStackTrace();
                     }
                 }
-                )
-        {
+                ) {
 
 
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                String access_token = ((NiggaChatApplication)getApplication()).getAccess_token();
-                Map<String,String> headers = new HashMap<>();
-                System.out.println("get token from application:"+access_token);
-                headers.put("access-token",access_token);
+                String access_token = ((NiggaChatApplication) getApplication()).getAccess_token();
+                Map<String, String> headers = new HashMap<>();
+                System.out.println("get token from application:" + access_token);
+                headers.put("access-token", access_token);
                 return headers;
             }
         };
@@ -240,10 +233,8 @@ public class CreateChatGroupActivity extends AppCompatActivity implements View.O
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch(item.getItemId())
-        {
-            case R.id.action_logout:
-            {
+        switch (item.getItemId()) {
+            case R.id.action_logout: {
                 this.logout();
                 return true;
             }

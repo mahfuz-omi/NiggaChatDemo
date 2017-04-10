@@ -50,7 +50,7 @@ import java.util.Map;
  * Created by omi on 11/8/2016.
  */
 
-public class ChatRoomActivity  extends AppCompatActivity {
+public class ChatRoomActivity extends AppCompatActivity {
     String PREFERENCE_FIRST_RUN = "isFirstRun";
     LinearLayout parent;
     EditText myMessage;
@@ -63,9 +63,7 @@ public class ChatRoomActivity  extends AppCompatActivity {
     boolean onNewIntent = false;
 
 
-
-    public void logout()
-    {
+    public void logout() {
         pDialog = new ProgressDialog(ChatRoomActivity.this);
         pDialog.setMessage("Please wait...");
         pDialog.setCancelable(false);
@@ -79,48 +77,42 @@ public class ChatRoomActivity  extends AppCompatActivity {
                             pDialog.dismiss();
                         // the response is already constructed as a JSONObject!
                         try {
-                            System.out.println("response: "+response.toString());
+                            System.out.println("response: " + response.toString());
 
 
-                            if(response.has("success"))
-                            {
-                                ((NiggaChatApplication)getApplication()).logoutUser();
+                            if (response.has("success")) {
+                                ((NiggaChatApplication) getApplication()).logoutUser();
                                 Toast.makeText(ChatRoomActivity.this, "You are logged out now!!", Toast.LENGTH_LONG).show();
+                                finish();
+                                Intent intent = new Intent(ChatRoomActivity.this, LoginActivity.class);
+                                startActivity(intent);
+                                return;
                             }
 
-
-                            finish();
-                            Intent intent = new Intent(ChatRoomActivity.this,LoginActivity.class);
-                            startActivity(intent);
-
-                            return;
 
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
-                }, new Response.ErrorListener()
-                {
+                }, new Response.ErrorListener() {
 
                     @Override
-                    public void onErrorResponse(VolleyError error)
-                    {
+                    public void onErrorResponse(VolleyError error) {
                         if (pDialog.isShowing())
                             pDialog.dismiss();
                         Toast.makeText(ChatRoomActivity.this, "Network error...please try again later", Toast.LENGTH_SHORT).show();
                         error.printStackTrace();
                     }
                 }
-                )
-        {
+                ) {
 
 
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                String access_token = ((NiggaChatApplication)getApplication()).getAccess_token();
-                Map<String,String> headers = new HashMap<>();
-                System.out.println("get token from application:"+access_token);
-                headers.put("access-token",access_token);
+                String access_token = ((NiggaChatApplication) getApplication()).getAccess_token();
+                Map<String, String> headers = new HashMap<>();
+                System.out.println("get token from application:" + access_token);
+                headers.put("access-token", access_token);
                 return headers;
             }
         };
@@ -134,10 +126,8 @@ public class ChatRoomActivity  extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch(item.getItemId())
-        {
-            case R.id.action_logout:
-            {
+        switch (item.getItemId()) {
+            case R.id.action_logout: {
                 this.logout();
                 return true;
             }
@@ -154,16 +144,14 @@ public class ChatRoomActivity  extends AppCompatActivity {
 
 
     private BroadcastReceiver myBroadcastReceiver =
-            new BroadcastReceiver()
-            {
+            new BroadcastReceiver() {
                 @Override
-                public void onReceive(Context context, Intent intent)
-                {
+                public void onReceive(Context context, Intent intent) {
 
                     String from = intent.getStringExtra("from");
                     String message = intent.getStringExtra("message");
                     String time = intent.getStringExtra("time");
-                    getMessage(from,message,time);
+                    getMessage(from, message, time);
                     //Toast.makeText(context, "received", Toast.LENGTH_SHORT).show();
 
                 }
@@ -181,39 +169,35 @@ public class ChatRoomActivity  extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         this.full_name = (TextView) findViewById(R.id.full_name);
-        full_name.setText(((NiggaChatApplication)getApplication()).getFull_name());
+        full_name.setText(((NiggaChatApplication) getApplication()).getFull_name());
 
-        registerReceiver(myBroadcastReceiver,intentFilter);
-
+        registerReceiver(myBroadcastReceiver, intentFilter);
 
 
         this.chatMessages = new ArrayList<>();
-        this.chatMessageAdapter = new ChatMessageAdapter(chatMessages,this);
+        this.chatMessageAdapter = new ChatMessageAdapter(chatMessages, this);
 
-        this.recyclerView = (RecyclerView)findViewById(R.id.parent);
+        this.recyclerView = (RecyclerView) findViewById(R.id.parent);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(chatMessageAdapter);
-        recyclerView.addItemDecoration(new DividerItemDecoration(ChatRoomActivity.this,DividerItemDecoration.VERTICAL));
+        recyclerView.addItemDecoration(new DividerItemDecoration(ChatRoomActivity.this, DividerItemDecoration.VERTICAL));
 
-        this.myMessage = (EditText)findViewById(R.id.myMessage);
-        if( ((NiggaChatApplication)getApplication()).isFirstRun())
-        {
+        this.myMessage = (EditText) findViewById(R.id.myMessage);
+        if (((NiggaChatApplication) getApplication()).isFirstRun()) {
             //Toast.makeText(this, "firrrrrst", Toast.LENGTH_SHORT).show();
             final String refreshedToken = FirebaseInstanceId.getInstance().getToken();
-            System.out.println("device id: "+refreshedToken);
+            System.out.println("device id: " + refreshedToken);
             JSONObject pnJson = new JSONObject();
-            try
-            {
-                pnJson.put("reg_id",refreshedToken);
+            try {
+                pnJson.put("reg_id", refreshedToken);
 
-            }catch(Exception e)
-            {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
 
-            System.out.println("pn json: "+pnJson.toString());
+            System.out.println("pn json: " + pnJson.toString());
             JsonObjectRequest jsonRequest = new JsonObjectRequest
                     (Request.Method.POST, WebService.PNREGISTRATION_URL, pnJson, new Response.Listener<JSONObject>() {
                         @Override
@@ -221,16 +205,13 @@ public class ChatRoomActivity  extends AppCompatActivity {
 
                             // the response is already constructed as a JSONObject!
                             try {
-                                System.out.println("login response: "+response.toString());
+                                System.out.println("login response: " + response.toString());
 
-                                if(response.has("success"))
-                                {
+                                if (response.has("success")) {
                                     System.out.println("pn successful");
-                                    ((NiggaChatApplication)getApplication()).setFirstRunFalse();
+                                    ((NiggaChatApplication) getApplication()).setFirstRunFalse();
 
-                                }
-                                else
-                                {
+                                } else {
                                     System.out.println("pn registration failed");
                                 }
 
@@ -238,12 +219,10 @@ public class ChatRoomActivity  extends AppCompatActivity {
                                 e.printStackTrace();
                             }
                         }
-                    }, new Response.ErrorListener()
-                    {
+                    }, new Response.ErrorListener() {
 
                         @Override
-                        public void onErrorResponse(VolleyError error)
-                        {
+                        public void onErrorResponse(VolleyError error) {
                             Toast.makeText(ChatRoomActivity.this, "Network error...please try again later", Toast.LENGTH_SHORT).show();
                             error.printStackTrace();
                         }
@@ -256,8 +235,8 @@ public class ChatRoomActivity  extends AppCompatActivity {
 
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
-                    Map<String,String> headers = new HashMap<>();
-                    headers.put("access-token",((NiggaChatApplication)getApplication()).getAccess_token());
+                    Map<String, String> headers = new HashMap<>();
+                    headers.put("access-token", ((NiggaChatApplication) getApplication()).getAccess_token());
                     return headers;
 
                 }
@@ -268,16 +247,9 @@ public class ChatRoomActivity  extends AppCompatActivity {
                     DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
             Volley.newRequestQueue(ChatRoomActivity.this).add(jsonRequest);
 
-        }
-        else
-        {
+        } else {
             //Toast.makeText(this, "not firrrrrst", Toast.LENGTH_SHORT).show();
         }
-
-
-
-
-
 
 
     }
@@ -287,17 +259,14 @@ public class ChatRoomActivity  extends AppCompatActivity {
         super.onNewIntent(i);
         //Toast.makeText(this, "new intent", Toast.LENGTH_SHORT).show();
 
-        if(i.hasExtra("fromName") && i.hasExtra("message") && i.hasExtra("time"))
-        {
+        if (i.hasExtra("fromName") && i.hasExtra("message") && i.hasExtra("time")) {
             String fromName = i.getStringExtra("fromName");
             String message = i.getStringExtra("message");
             String time = i.getStringExtra("time");
             onNewIntent = true;
-            this.getMessage(fromName,message,time);
+            this.getMessage(fromName, message, time);
 
-        }
-        else
-        {
+        } else {
             System.out.println("no data new intent");
         }
     }
@@ -307,73 +276,63 @@ public class ChatRoomActivity  extends AppCompatActivity {
         super.onResume();
         //Toast.makeText(this, "resume", Toast.LENGTH_SHORT).show();
         Intent i = getIntent();
-        if(onNewIntent == true)
+        if (onNewIntent == true)
             return;
 
-        if(i.hasExtra("fromName") && i.hasExtra("message") && i.hasExtra("time"))
-        {
+        if (i.hasExtra("fromName") && i.hasExtra("message") && i.hasExtra("time")) {
             String fromName = i.getStringExtra("fromName");
             String message = i.getStringExtra("message");
             String time = i.getStringExtra("time");
-            this.getMessage(fromName,message,time);
+            this.getMessage(fromName, message, time);
 
-        }
-        else
-        {
+        } else {
             System.out.println("no data resume");
         }
     }
 
-    public void getMessage(String from, String message, String time)
-    {
-        ((Vibrator)getSystemService(VIBRATOR_SERVICE)).vibrate(500);
-        try
-        {
+    public void getMessage(String from, String message, String time) {
+        ((Vibrator) getSystemService(VIBRATOR_SERVICE)).vibrate(500);
+        try {
             Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
             Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);
             r.play();
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println("get message:  "+from+message+time);
-        ChatMessage chatMessage = new ChatMessage(from,message,time);
+        System.out.println("get message:  " + from + message + time);
+        ChatMessage chatMessage = new ChatMessage(from, message, time);
         this.chatMessages.add(chatMessage);
         this.chatMessageAdapter.notifyDataSetChanged();
-        this.recyclerView.scrollToPosition(this.chatMessages.size()-1);
+        this.recyclerView.scrollToPosition(this.chatMessages.size() - 1);
 
 
     }
 
-    public void sendMessage(View v)
-    {
+    public void sendMessage(View v) {
 
-        String myMessageText  = myMessage.getText().toString();
+        String myMessageText = myMessage.getText().toString();
         myMessage.setText("");
-        if(myMessageText.length() != 0)
-        {
+        if (myMessageText.length() != 0) {
 
-            final ChatMessage chatMessage = new ChatMessage(((NiggaChatApplication)getApplication()).getFull_name(),myMessageText,"");
+            final ChatMessage chatMessage = new ChatMessage(((NiggaChatApplication) getApplication()).getFull_name(), myMessageText, "");
             this.chatMessages.add(chatMessage);
             this.chatMessageAdapter.notifyDataSetChanged();
-            this.recyclerView.scrollToPosition(this.chatMessages.size()-1);
-            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            this.recyclerView.scrollToPosition(this.chatMessages.size() - 1);
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(myMessage.getWindowToken(), 0);
-
 
 
             JSONObject sendMessageJson = new JSONObject();
             try {
                 //sendMessageJson.put("from",((NiggaChatApplication)getApplication()).getEmail_address() );
-                sendMessageJson.put("message",myMessageText);
+                sendMessageJson.put("message", myMessageText);
                 //sendMessageJson.put("time",System.currentTimeMillis());
 
             } catch (Exception e) {
                 e.printStackTrace();
             }
 
-            System.out.println("login json: "+sendMessageJson.toString());
+            System.out.println("login json: " + sendMessageJson.toString());
 
 //            pDialog = new ProgressDialog(ChatRoomActivity.this);
 //            pDialog.setMessage("Please wait...");
@@ -388,10 +347,9 @@ public class ChatRoomActivity  extends AppCompatActivity {
 //                                pDialog.dismiss();
                             // the response is already constructed as a JSONObject!
                             try {
-                                System.out.println("login response: "+response.toString());
+                                System.out.println("login response: " + response.toString());
 
-                                if(response.has("success"))
-                                {
+                                if (response.has("success")) {
                                     System.out.println("message sent success");
                                     System.out.println(response);
                                     String time = response.getString("time");
@@ -403,9 +361,7 @@ public class ChatRoomActivity  extends AppCompatActivity {
 //                                    Intent intent = new Intent(ChatRoomActivity.this,ChatRoomActivity.class);
 //                                    startActivity(intent);
 //                                    finish();
-                                }
-                                else
-                                {
+                                } else {
                                     JSONObject error = response.getJSONObject("error");
                                     String text = error.getString("text");
                                     Toast.makeText(ChatRoomActivity.this, text, Toast.LENGTH_SHORT).show();
@@ -415,12 +371,10 @@ public class ChatRoomActivity  extends AppCompatActivity {
                                 e.printStackTrace();
                             }
                         }
-                    }, new Response.ErrorListener()
-                    {
+                    }, new Response.ErrorListener() {
 
                         @Override
-                        public void onErrorResponse(VolleyError error)
-                        {
+                        public void onErrorResponse(VolleyError error) {
 //                            if (pDialog.isShowing())
 //                                pDialog.dismiss();
                             //Toast.makeText(ChatRoomActivity.this, "Network error...please try again later", Toast.LENGTH_SHORT).show();
@@ -434,8 +388,8 @@ public class ChatRoomActivity  extends AppCompatActivity {
 
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
-                    Map<String,String> headers = new HashMap<>();
-                    headers.put("access-token",((NiggaChatApplication)getApplication()).getAccess_token());
+                    Map<String, String> headers = new HashMap<>();
+                    headers.put("access-token", ((NiggaChatApplication) getApplication()).getAccess_token());
                     return headers;
 
                 }
@@ -446,11 +400,9 @@ public class ChatRoomActivity  extends AppCompatActivity {
                     DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
             Volley.newRequestQueue(ChatRoomActivity.this).add(jsonRequest);
 
-        }
-        else
-        {
+        } else {
             //loginErrorMsg.setText("Please fill up all input");
-            Toast.makeText(ChatRoomActivity.this,"plz fill up the box", Toast.LENGTH_LONG).show();
+            Toast.makeText(ChatRoomActivity.this, "plz fill up the box", Toast.LENGTH_LONG).show();
         }
 
     }
